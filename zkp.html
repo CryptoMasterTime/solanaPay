@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SummaryByJeffCryptoMasterTime</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px auto;
+        max-width: 800px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    .section {
+        margin-bottom: 30px;
+    }
+    .subsection {
+        margin-left: 30px;
+    }
+    .note {
+        font-style: italic;
+        color: #666;
+    }
+    .bulletproofs {
+        color: #4CAF50;
+    }
+    .sigma {
+        color: #2196F3;
+    }
+    .elgamal {
+        color: #FF9800;
+    }
+    .fees {
+        color: #FF5722;
+    }
+    code {
+        background-color: #f0f0f0;
+        padding: 2px 5px;
+        border-radius: 3px;
+    }
+</style>
+</head>
+<body>
+<h1>SolanaZKPsummary</h1>
+
+<div class="section">
+    <h2 class="bulletproofs">Bulletproofs</h2>
+    <div class="subsection">
+        <h3>Range Proofs</h3>
+        <p>Range proofs are utilized for ensuring the validity of encrypted amounts.</p>
+        <p class="note">Bulletproofs are employed for range proofs.</p>
+        <p>Example:</p>
+        <code>Bulletproof::prove_range(&proof, &commitments, &values);</code>
+    </div>
+</div>
+
+<div class="section">
+    <h2 class="sigma">Sigma Protocols</h2>
+    <div class="subsection">
+        <h3>Validity Proof</h3>
+        <p>Ensures that ElGamal public keys and ciphertexts are properly formed.</p>
+        <p class="note">Required for various instructions like Withdraw, Transfer, etc.</p>
+        <p>Example:</p>
+        <code>SigmaProtocol::prove_validity(&proof, &public_key);</code>
+    </div>
+    <div class="subsection">
+        <h3>Zero-balance Proof</h3>
+        <p>Certifies that a twisted ElGamal ciphertext encrypts the number zero.</p>
+        <p class="note">Required for EmptyAccount instruction.</p>
+        <p>Example:</p>
+        <code>SigmaProtocol::prove_zero_balance(&proof, &ciphertext);</code>
+    </div>
+    <div class="subsection">
+        <h3>Equality Proof</h3>
+        <p>Certifies equality between ciphertext and Pedersen commitment, or between two ciphertexts.</p>
+        <p class="note">Used in various instructions for different purposes.</p>
+        <p>Example:</p>
+        <code>SigmaProtocol::prove_equality(&proof, &ciphertext, &commitment);</code>
+    </div>
+    <div class="subsection">
+        <h3>Fee Sigma Proof</h3>
+        <p>Ensures correct computation of transfer fees.</p>
+        <p class="note">Required specifically for TransferWithFee instruction.</p>
+        <p>Example:</p>
+        <code>SigmaProtocol::prove_fee_sigma(&proof, &fee);</code>
+    </div>
+</div>
+
+<div class="section">
+    <h2 class="elgamal">ElGamal Encryption</h2>
+    <div class="subsection">
+        <h3>Transfer Data</h3>
+        <p>Includes ElGamal public keys, encrypted transfer amounts, and proofs.</p>
+        <p>Example:</p>
+        <code>ElGamal::generate_public_keys(&sender_key, &receiver_key, &auditor_key);</code>
+    </div>
+    <div class="subsection">
+        <h3>TransferWithFee Data</h3>
+        <p>Extends Transfer Data with additional components for handling transfer fees.</p>
+        <p>Example:</p>
+        <code>TransferWithFeeData::add_fee_encryption(&fee_encryption);</code>
+    </div>
+</div>
+
+<div class="section">
+    <h2 class="fees">Fee Encryption</h2>
+    <div class="subsection">
+        <h3>FeeEncryption Structure</h3>
+        <p>Components for encrypting transfer fees under destination and authority keys.</p>
+        <p>Example:</p>
+        <code>FeeEncryption::new(&commitment, &destination_key, &authority_key);</code>
+    </div>
+    <div class="subsection">
+        <h3>Fee Verification Proofs</h3>
+        <p>Additional proofs for certifying the validity and correctness of encrypted fees.</p>
+        <p>Example:</p>
+        <code>SigmaProtocol::verify_validity_proof(&proof, &fee_ciphertext);</code>
+    </div>
+</div>
+
+</body>
+</html>
